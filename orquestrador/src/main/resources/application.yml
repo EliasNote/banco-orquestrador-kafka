@@ -1,0 +1,15 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: orquestrador
+  kafka:
+    bootstrap-servers: ${KAFKA_BROKER:localhost:9092}
+    topic:
+      usuarios: usuarios-validation
+      contas: contas-validation
+      orchestrator: orchestrator
+    consumer:
+      group-id: orchestrator-group
+      auto-offset-reset: latest
