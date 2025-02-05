@@ -1,8 +1,7 @@
 // KafkaConfig.java
-package com.esand.orquestrador.config.kafka;
+package com.esand.contas.config.kafka;
 
-import com.esand.orquestrador.config.kafka.topic.Topics;
-import org.apache.kafka.clients.admin.NewTopic;
+import com.esand.contas.config.kafka.topic.Topics;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
-import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.*;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
@@ -72,33 +70,5 @@ public class KafkaConfig {
     @Bean
     public KafkaTemplate<String, String> kafkaTemplate(ProducerFactory<String, String> producerFactory) {
         return new KafkaTemplate<>(producerFactory);
-    }
-
-    private NewTopic buildTopic(String name) {
-        return TopicBuilder
-                .name(name)
-                .partitions(PARTITION_COUNT)
-                .replicas(REPLICA_COUNT)
-                .build();
-    }
-
-    @Bean
-    public NewTopic startTopic() {
-        return buildTopic(topics.getStartTopic());
-    }
-
-    @Bean
-    public NewTopic successContas() {
-        return buildTopic(topics.getContasTopic());
-    }
-
-    @Bean
-    public NewTopic successUsuarios() {
-        return buildTopic(topics.getUsuariosTopic());
-    }
-
-    @Bean
-    public NewTopic orchestratorTopic() {
-        return buildTopic(topics.getOrchestratorTopic());
     }
 }
