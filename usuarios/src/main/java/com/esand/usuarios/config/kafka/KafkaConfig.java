@@ -1,7 +1,5 @@
-package com.esand.orquestrador.config.kafka;
+package com.esand.usuarios.config.kafka;
 
-import com.esand.orquestrador.config.kafka.topic.Topics;
-import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -21,9 +19,6 @@ import java.util.Map;
 @Configuration
 public class KafkaConfig {
 
-    private static final Integer PARTITION_COUNT = 1;
-    private static final Integer REPLICA_COUNT = 1;
-
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
@@ -32,12 +27,6 @@ public class KafkaConfig {
 
     @Value("${spring.kafka.consumer.auto-offset-reset}")
     private String autoOffsetReset;
-
-    private final Topics topics;
-
-    public KafkaConfig(Topics topics) {
-        this.topics = topics;
-    }
 
     @Bean
     public ConsumerFactory<String, String> consumerFactory() {
@@ -71,33 +60,5 @@ public class KafkaConfig {
     @Bean
     public KafkaTemplate<String, String> kafkaTemplate(ProducerFactory<String, String> producerFactory) {
         return new KafkaTemplate<>(producerFactory);
-    }
-
-    private NewTopic buildTopic(String name) {
-        return TopicBuilder
-                .name(name)
-                .partitions(PARTITION_COUNT)
-                .replicas(REPLICA_COUNT)
-                .build();
-    }
-
-    @Bean
-    public NewTopic startTopic() {
-        return buildTopic(topics.getStartTopic());
-    }
-
-    @Bean
-    public NewTopic successContas() {
-        return buildTopic(topics.getContasTopic());
-    }
-
-    @Bean
-    public NewTopic successUsuarios() {
-        return buildTopic(topics.getUsuariosTopic());
-    }
-
-    @Bean
-    public NewTopic orchestratorTopic() {
-        return buildTopic(topics.getOrchestratorTopic());
     }
 }

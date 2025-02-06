@@ -1,7 +1,7 @@
-package com.esand.orquestrador.kafka;
+package com.esand.usuarios.kafka;
 
-import com.esand.orquestrador.service.OrchestratorService;
-import com.esand.orquestrador.utils.JsonUtil;
+import com.esand.usuarios.service.UsuarioService;
+import com.esand.usuarios.utils.JsonUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -12,15 +12,15 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class KafkaConsumer {
 
-    private final OrchestratorService orchestratorService;
+    private final UsuarioService usuarioService;
     private final JsonUtil jsonUtil;
 
     @KafkaListener(
             groupId = "${spring.kafka.consumer.group-id}",
-            topics = "${spring.kafka.topic.start}"
+            topics = "${spring.kafka.topic.usuarios}"
     )
     public void consumerStart(String payload) {
         log.info("Receiving event {} from start topic", payload);
-        orchestratorService.sendEvent(jsonUtil.toUsuario(payload));
+        usuarioService.sendEvent(jsonUtil.toEvent(payload));
     }
 }

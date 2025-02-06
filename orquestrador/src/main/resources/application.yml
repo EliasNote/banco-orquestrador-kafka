@@ -13,4 +13,4 @@ spring:
       orchestrator: orchestrator
     consumer:
       group-id: orchestrator-group
-      auto-offset-reset: latest
+      auto-offset-reset: earliest
