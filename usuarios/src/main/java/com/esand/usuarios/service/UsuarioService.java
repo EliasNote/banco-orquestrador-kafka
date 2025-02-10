@@ -2,6 +2,7 @@ package com.esand.usuarios.service;
 
 import com.esand.usuarios.dto.EventDto;
 import com.esand.usuarios.dto.UsuarioDto;
+import com.esand.usuarios.enums.Source;
 import com.esand.usuarios.kafka.KafkaProducer;
 import com.esand.usuarios.repository.UsuarioRepository;
 import com.esand.usuarios.utils.Map;
@@ -28,6 +29,7 @@ public class UsuarioService {
         UsuarioDto usuario = cadastrar(event.usuario());
         kafkaProducer.sendEvent(
                 EventDto.builder()
+                        .source(Source.USUARIOS)
                         .usuario(usuario)
                         .build(),
                 orchestratorTopic

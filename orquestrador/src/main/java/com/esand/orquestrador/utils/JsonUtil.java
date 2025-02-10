@@ -1,6 +1,5 @@
 package com.esand.orquestrador.utils;
 
-import com.esand.orquestrador.dto.UsuarioDto;
 import com.esand.orquestrador.dto.EventDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
@@ -23,14 +22,6 @@ public class JsonUtil {
     public EventDto toEvent(String json) {
         try {
             return objectMapper.readValue(json, EventDto.class);
-        } catch (Exception ex) {
-            return null;
-        }
-    }
-
-    public UsuarioDto toUsuario(String json) {
-        try {
-            return objectMapper.readValue(json, UsuarioDto.class);
         } catch (Exception ex) {
             return null;
         }

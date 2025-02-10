@@ -17,10 +17,10 @@ public class KafkaConsumer {
 
     @KafkaListener(
             groupId = "${spring.kafka.consumer.group-id}",
-            topics = "${spring.kafka.topic.start}"
+            topics = "${spring.kafka.topic.orchestrator}"
     )
-    public void consumerStart(String payload) {
+    public void consumer(String payload) {
         log.info("Receiving event {} from start topic", payload);
-        orchestratorService.sendEvent(jsonUtil.toUsuario(payload));
+        orchestratorService.sendEvent(jsonUtil.toEvent(payload));
     }
 }
